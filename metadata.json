@@ -1,0 +1,7 @@
+{
+  "name": "Tenergy",
+  "description": "Автономный клуб настольного тенниса Tenergy: бронирование столов, аренда ракеток и поиск партнеров.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
