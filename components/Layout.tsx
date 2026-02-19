@@ -10,6 +10,7 @@ interface LayoutProps {
   showNav?: boolean;
   title?: string;
   hideHeader?: boolean;
+  onBack?: () => void;
 }
 
 export const Layout: React.FC<LayoutProps> = ({ 
@@ -18,19 +19,27 @@ export const Layout: React.FC<LayoutProps> = ({
   onNavigate, 
   showNav = true,
   title,
-  hideHeader = false
+  hideHeader = false,
+  onBack
 }) => {
   return (
     <div className="flex flex-col min-h-screen max-w-md mx-auto bg-white shadow-xl overflow-hidden relative">
       {/* Top Header */}
       {!hideHeader && (
-        <header className="px-6 pt-12 pb-4 flex items-center justify-between bg-white z-10">
-          <h1 className="text-2xl font-bold text-[#1B407F]">{title || 'Tenergy'}</h1>
+        <header className="px-6 pt-12 pb-4 flex items-center justify-between bg-white z-20">
+          <div className="flex items-center gap-3">
+            {onBack && (
+              <button onClick={onBack} className="p-2 -ml-2 text-[#1B407F] hover:bg-gray-100 rounded-full transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              </button>
+            )}
+            <h1 className="text-2xl font-bold text-[#1B407F]">{title || 'Tenergy'}</h1>
+          </div>
           <div 
             onClick={() => onNavigate(AppScreen.PROFILE)}
             className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-[#3362B5] transition-all"
           >
-            <span className="text-xs font-bold text-gray-500">A</span>
+            <span className="text-xs font-bold text-gray-500 uppercase tracking-tighter">Profile</span>
           </div>
         </header>
       )}
@@ -52,7 +61,7 @@ export const Layout: React.FC<LayoutProps> = ({
             }
           />
           <NavItem 
-            isActive={activeScreen === AppScreen.BOOKING_DATE} 
+            isActive={activeScreen === AppScreen.BOOKING_DATE || activeScreen === AppScreen.BOOKING_TIME || activeScreen === AppScreen.BOOKING_RACKETS || activeScreen === AppScreen.BOOKING_SUMMARY || activeScreen === AppScreen.PAYMENT} 
             onClick={() => onNavigate(AppScreen.BOOKING_DATE)} 
             label="Бронь"
             icon={
@@ -68,7 +77,7 @@ export const Layout: React.FC<LayoutProps> = ({
             }
           />
           <NavItem 
-            isActive={activeScreen === AppScreen.PROFILE} 
+            isActive={activeScreen === AppScreen.PROFILE || activeScreen === AppScreen.MY_CARDS || activeScreen === AppScreen.SETTINGS || activeScreen === AppScreen.SUPPORT} 
             onClick={() => onNavigate(AppScreen.PROFILE)} 
             label="Профиль"
             icon={
